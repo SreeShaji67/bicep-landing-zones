@@ -11,7 +11,6 @@ resource rg 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: resourceGroupName
   location: location
 }
-
 @description('The name of the resource group which was created.')
 output resourceGroupName string = rg.name
 @description('The resource id of the resource group which was created')
