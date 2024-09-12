@@ -1,0 +1,54 @@
+parameters:
+
+- name: environmentName
+  displayName: Environment Name
+  type: string
+  values:
+  - mgmt-uks
+  - hub-uks
+
+- name: applicationName
+  displayName: application Name
+  type: boolean 
+
+variables:
+  - template: "../../../environment-variables/${{ parameters.environmentName }}.yml"
+  - name: folderPath
+    value: "Landing-Zones/mgmt-sbc"
+
+  - name: fileName
+    value: "mgmt.bicep"
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - components/biceps/resourcegroup
+    - components/biceps/routetable
+    - components/biceps/virtualnetwork
+
+resources:
+  repositories:
+    - repository: bicep-pipeline-templates
+      type: git
+      name: bicep-pipeline-templates
+      #ref: ${{ variables.pipelineVersion }}
+
+stages:
+
+  - template: /pipeline-templates/main.yml@bicep-pipeline-templates
+    parameters:
+      serviceConnection: ${{ variables.serviceConnection }}
+      location: ${{ variables.location }}
+      subscriptionId: ${{ variables.subscriptionId }}
+      folderPath: ${{ variables.folderPath }}
+      environmentName: ${{ parameters.environmentName }}
+      fileName: ${{ variables.fileName }}
+      vmImageName: ${{ variables.vmImageName }}
+      applicationName:  ${{ parameters.applicationName }}
+
+      
+ 

@@ -1,0 +1,63 @@
+
+variables:
+  - name: location
+    value: "uksouth"
+
+  - name: serviceConnection
+    value: "test-hub-sbc"
+
+  - name: subscriptionId
+    value: "41baf074-a44f-4d76-b28e-02692465da01"
+
+  - name: vmImageName
+    value: "ubuntu-20.04"
+
+  - name: folderPath
+    value: "Landing-Zones/hub-sbc"
+
+  - name: environmentName
+    value: "hub-uks"
+
+  - name: artifactStorageAccountName
+    value: "artifactshubukssa001"
+
+  - name: artifactStorageAccountRG
+    value: "artifact-hub-uks-rg-001"
+
+  - name: artifactStorageAccountContainer
+    value: "artifactshubukscontainer001"    
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - components/biceps/resourcegroup
+    - components/biceps/routetable
+    - components/biceps/virtualnetwork
+
+resources:
+  repositories:
+    - repository: bicep-pipeline-templates
+      type: git
+      name: bicep-pipeline-templates
+      #ref: ${{ variables.pipelineVersion }}
+
+stages:
+
+  - template: /pipeline-templates/main.yml@bicep-pipeline-templates
+    parameters:
+      serviceConnection: ${{ variables.serviceConnection }}
+      location: ${{ variables.location }}
+      subscriptionId: ${{ variables.subscriptionId }}
+      folderPath: "${{ variables.folderPath }}/${{ variables.environmentName }}"
+      environmentName: ${{ variables.environmentName }}
+      fileName: "${{ variables.environmentName }}.bicep"
+      vmImageName: ${{ variables.vmImageName }}
+      artifactStorageAccountName: ${{ variables.artifactStorageAccountName }}
+      artifactStorageAccountRG: ${{ variables.artifactStorageAccountRG }}
+      artifactStorageAccountContainer: ${{ variables.artifactStorageAccountContainer}}
+      
+ 
