@@ -20,8 +20,8 @@ jobs:
       vmImageName: "ubuntu-20.04"
       folderPath: "Landing-Zones/hub-sbc"
       environmentName: "hub-uks"
-      artifactStorageAccountName: "artifactshubukssa001"
-      artifactStorageAccountRG: "artifact-hub-uks-rg-001"
+      artifactStorageAccountName: "testinfrastructuresa01"
+      artifactStorageAccountRG: "test-infrastructure-rg-uks-001"
       artifactStorageAccountContainer: "artifactshubukscontainer001"
 
     steps:
