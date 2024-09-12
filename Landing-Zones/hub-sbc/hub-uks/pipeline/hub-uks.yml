@@ -32,7 +32,7 @@ jobs:
       # Since GitHub Actions does not have the same templating mechanism, we assume you reference a reusable workflow.
 
       - name: Trigger reusable workflow (bicep-pipeline-templates)
-        uses: my-org/my-reusable-pipelines/.github/workflows/main.yml@main # Reference reusable workflow in another repo
+        uses: SreeShaji67/bicep-pipeline-templates/pipeline-templates/main.yml@main # Reference reusable workflow in another repo
         with:
           location: ${{ env.location }}
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
